@@ -1,0 +1,27 @@
+version: 0.1
+date: 2016-09-21
+
+files:
+   - path: /var/log/hadoop
+     action: delete
+     leaves: 
+        - hadoop
+           - hdfs
+           - mapreduce
+        - hadoop-mapreduce
+           - mapred       
+        - hadoop-yarn
+           - nodemanager
+              - recovery-state
+           - yarn
+        - hbase
+        - hive
+        - hive-hcatalog
+        - hst
+        - knox
+        - oozie
+        - spark
+        - sqoop
+        - storm
+        - webhcat
+        - zookeeper
