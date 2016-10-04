@@ -3,28 +3,30 @@
 
 import yaml
 
-class LogHouseKepeer:
+class LogHouseKeeper:
 
    def __init__(self, config_file):
       self.config_file = config_file
+      self.yaml_stream = ''
 
    def __enter__(self):
-#      self.file = open(self.config_file, 'r', encoding='UTF-8')
-      with open(self.config_file, 'r') as self.file:
+      with open(self.config_file, 'r') as stream:
          try:
-	    print(yaml.load(stream))
+            self.yaml_stream = yaml.load(stream)
          except yaml.YAMLError as exc:
             print(exc)
-#      return self.file
+      return self
 
    def __exit__(self, type, msg, traceback):
       if type:
-         print(msg)  # 作你的例外處理
-      self.file.close()
+         print(msg)
       return False
 
+   def printConfig(self):
+      print(self.yaml_stream)
 
 if __name__ == '__main__':
-   keeper = LogHouseKeeper("config.yml")
-   keeper.config()
+   with LogHouseKeeper("config.yml") as keeper:
+      #print(keeper.yaml_stream)
+      keeper.printConfig()
 
