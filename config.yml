@@ -1,19 +1,18 @@
 version: 0.1
 date: 2016-09-21
+aging: 7 # files which are last 7 days ago
 
-files:
-   - path: /var/log/hadoop
-     action: delete
-     leaves: 
-        - hadoop
-           - hdfs
-           - mapreduce
-        - hadoop-mapreduce
-           - mapred       
-        - hadoop-yarn
-           - nodemanager
-              - recovery-state
-           - yarn
+# 要執行 archive or housekeeping 的路徑
+pathes:
+   - parent: /var/log
+     action: delete # 直接刪除
+     child: 
+        - hadoop/hdfs
+        - hadoop/mapreduce
+        - hadoop/mapreduce
+        - hadoop-mapreduce/mapred
+        - hadoop-yarn/nodemanager/recovery-state
+        - hadoop-yarn/yarn
         - hbase
         - hive
         - hive-hcatalog
@@ -25,3 +24,18 @@ files:
         - storm
         - webhcat
         - zookeeper
+   - parent: /var/log/storm
+     action: delete # 直接刪除
+     child:
+        - xxx
+        - yyy
+
+   #
+   - parent: /var/log/hive
+     action: archive
+     archive_path: /backup
+     child:
+        - aaa
+        - bbb
+
+...
